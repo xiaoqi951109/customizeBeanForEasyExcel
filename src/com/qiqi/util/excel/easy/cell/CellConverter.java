@@ -24,7 +24,7 @@ public class CellConverter implements Converter {
     }
 
     public Object convertToJavaData(CellData cellData, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-        return null;
+        return cellData.getData();
     }
 
     public CellData convertToExcelData(Object o, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration) throws Exception {
@@ -33,6 +33,7 @@ public class CellConverter implements Converter {
         if (null == cell) {
             return cellData;
         }
+        // 数据类型转换
         if (null != cell.t && null != cell.v && cell.t.equals("double")) {
             //double value
             if (!(cell.v instanceof BigDecimal)) {

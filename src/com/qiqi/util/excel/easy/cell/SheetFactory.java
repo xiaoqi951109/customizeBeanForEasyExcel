@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Sheet Set
+ * Sheet处理
  *
  * @Author XiaoQi
  * @Time 2021/3/18
  */
 public class SheetFactory {
 
+    // row集合
     List<RowFactory> rowList = new ArrayList<>();
 
     public void add(RowFactory rowFactory) {
@@ -43,6 +44,5 @@ public class SheetFactory {
         }
         return new ArrayList<>();
     }
-
 
 }

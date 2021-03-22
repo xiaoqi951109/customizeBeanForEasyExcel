@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Cell
+ * Cell 封装对象
+ * 可以将所有的类和JSON等数据进行统一转换和处理
  *
  * @Author XiaoQi
  * @Time 2021/3/18

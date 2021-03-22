@@ -19,10 +19,12 @@ public class CellStrategy implements CellWriteHandler {
     public void afterCellDataConverted(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, CellData cellData, org.apache.poi.ss.usermodel.Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
         if (cellData.getData() instanceof Cell) {
             Cell buCell = (Cell) cellData.getData();
+            //跨行跨列的设置
             if (buCell.row > 1 || buCell.col > 1) {
                 writeSheetHolder.getSheet().addMergedRegionUnsafe(
                         new CellRangeAddress(cell.getRowIndex(), cell.getRowIndex() + buCell.row - 1, cell.getColumnIndex(), cell.getColumnIndex() + buCell.col - 1));
             }
+            //样式处理可以自定义
             CellStyle style = writeSheetHolder.getSheet().getWorkbook().createCellStyle();
             short backgroundColor = buCell.bc;
             if (backgroundColor > 0) {

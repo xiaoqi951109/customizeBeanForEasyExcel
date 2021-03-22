@@ -14,13 +14,18 @@ import java.util.List;
 
 public class Test {
 
-
     public static void main(String[] args) {
         String fileName = "\\xxxx\\simpleWrite.xlsx";
         ExcelWriter excelWriter = null;
         try {
             excelWriter = EasyExcel.write(fileName).build();
-            test(excelWriter);
+//            List data = demoDataList1();//跨行跨列的坐标演示
+            List data = demoDataList2();//跨行跨列的处理
+            WriteSheet writeSheet = EasyExcel.writerSheet("sheet1")
+                    .registerConverter(new CellConverter())  //数据转换注册
+                    .registerWriteHandler(new CellStrategy())  //Cell处理钩子
+                    .build();
+            excelWriter.write(data, writeSheet);
         } finally {
             if (excelWriter != null) {
                 excelWriter.finish();
@@ -28,17 +33,12 @@ public class Test {
         }
     }
 
-    public static void test(ExcelWriter excelWriter) {
-//        List data = dataList1();
-        List data = dataList2();
-        WriteSheet writeSheet = EasyExcel.writerSheet("sheet1")
-                .registerConverter(new CellConverter())
-                .registerWriteHandler(new CellStrategy())
-                .build();
-        excelWriter.write(data, writeSheet);
-    }
-
-    private static List dataList1() {
+    /**
+     * 通过 x.y的方式感知跨行跨列的处理
+     *
+     * @return
+     */
+    private static List demoDataList1() {
         SheetFactory sheetFactory = new SheetFactory();
 
         RowFactory factory1 = new RowFactory();
@@ -71,12 +71,17 @@ public class Test {
     }
 
 
-    private static List dataList2() {
+    /**
+     * 跨行列实际的excel模板
+     *
+     * @return
+     */
+    private static List demoDataList2() {
         SheetFactory sheetFactory = new SheetFactory();
 
         RowFactory factory0 = new RowFactory();
         factory0.str("订单汇总模板").row(3).col(4).bc(IndexedColors.GREY_40_PERCENT.getIndex()).a(HorizontalAlignment.CENTER);
-        sheetFactory.add(factory0,3);
+        sheetFactory.add(factory0, 3);
 
         RowFactory factory1 = new RowFactory();
         factory1.str("客户名称").a(HorizontalAlignment.CENTER);
